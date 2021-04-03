@@ -93,6 +93,33 @@ namespace ShopBridge.Test
             // Assert
             Assert.Null(badResponse);
         }
+
+        [Fact]
+        public void TestPatchResponse()
+        {
+            var mock = new Mock<IProductData>();
+            Product mockproduct = new Product()
+            {
+                Id =Guid.NewGuid(),
+                Name = "Product One",
+                Description ="testdes",
+                Price ="100"
+            };
+
+            Product updatedmockproduct = new Product()
+            {
+                Id = mockproduct.Id,
+                Name = "Product One Updated",
+                Description = "testdes updated",
+                Price = "150"
+            };
+
+            mock.Setup(r => r.ModifyProduct(mockproduct)).Returns(updatedmockproduct);
+            ProductsController controller = new ProductsController(mock.Object);
+            Product response = controller.ModifyProduct(mockproduct.Id, mockproduct);
+            Assert.Equal(mockproduct, response);
+
+        }
     }
     
 }

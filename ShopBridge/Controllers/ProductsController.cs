@@ -61,7 +61,7 @@ namespace ShopBridge.Controllers
 
         [HttpPatch]
         [Route("api/[controller]/{id}")]
-        public IActionResult ModifyProduct(Guid id, Product product)
+        public Product ModifyProduct(Guid id, Product product)
         {
             var existingProduct = _productData.GetSingleProduct(id);
                 if(existingProduct != null)
@@ -69,7 +69,7 @@ namespace ShopBridge.Controllers
                 product.Id = existingProduct.Id;
                 _productData.ModifyProduct(product);
                 }
-            return Ok(product);
+            return product;
         
         }
     }
