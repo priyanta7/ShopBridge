@@ -118,7 +118,6 @@ namespace ShopBridge.Test
             ProductsController controller = new ProductsController(mock.Object);
             Product response = controller.ModifyProduct(mockproduct.Id, mockproduct);
             Assert.Equal(mockproduct, response);
-
         }
     }
     
