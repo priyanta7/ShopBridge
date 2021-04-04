@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using ShopBridge.Controllers;
 using ShopBridge.Models;
@@ -72,7 +72,23 @@ namespace ShopBridge.Test
         public async Task TestDeleteProductBadResponse()
         {
             var mock = new Mock<IProductData>();
-
+            List<Product> mockproduct = new List<Product>()
+            {
+                new Product()
+            {
+                Id =Guid.NewGuid(),
+                Name = "Product One",
+                Description ="testdes",
+                Price ="100"
+            }
+            
+            };
+            mock.Setup(repo => repo.DeleteProduct(It.IsAny<Product>()))
+   .Callback((Product product) =>
+   {
+       product.Id = mockproduct[0].Id;
+       mockproduct.Remove(product);
+   });
             ProductsController controller = new ProductsController(mock.Object);
             var notExistingGuid = Guid.NewGuid();
             // Act
@@ -82,6 +98,32 @@ namespace ShopBridge.Test
         }
 
         [Fact]
+        public async Task TestDeleteProduct()
+        {
+            var mock = new Mock<IProductData>();
+            List<Product> mockproduct = new List<Product>()
+            {
+                new Product()
+            {
+                Id =Guid.NewGuid(),
+                Name = "Product One",
+                Description ="testdes",
+                Price ="100"
+            }
+
+            };
+            mock.Setup(repo => repo.DeleteProduct(It.IsAny<Product>()))
+   .Callback((Product product) =>
+   {
+       product.Id = mockproduct[0].Id;
+       mockproduct.Remove(product);
+   });
+            ProductsController controller = new ProductsController(mock.Object);
+            ActionResult response = await controller.DeleteProduct(mockproduct[0].Id);
+            Assert.NotNull(response);
+        }
+
+            [Fact]
         public void TestSingleProductBadResponse()
         {
             var mock = new Mock<IProductData>();
@@ -114,10 +156,11 @@ namespace ShopBridge.Test
                 Price = "150"
             };
 
-            mock.Setup(r => r.ModifyProduct(mockproduct)).Returns(updatedmockproduct);
+            mock.Setup(r => r.ModifyProduct(updatedmockproduct)).Returns(updatedmockproduct);
             ProductsController controller = new ProductsController(mock.Object);
-            Product response = controller.ModifyProduct(mockproduct.Id, mockproduct);
-            Assert.Equal(mockproduct, response);
+            Product response = controller.ModifyProduct(mockproduct.Id, updatedmockproduct);
+            Assert.Equal(updatedmockproduct, response);
+
         }
     }
     
