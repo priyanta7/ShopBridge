@@ -3,16 +3,18 @@
 - Assuming the ShopBridge project code is cloned and the Solution is being run successfully
 
 - The below steps need to be performed : 
+
 -install the following nuget packages- 1.Microsoft.Entityframeworkcore.sqlserver
                                        2.Microsoft.Entityframeworkcore.tools
                                        3.Moq
                                        4.FluentAssertions
+
 -Now, Go to appsettings.json  and change the server name "Desktop-HRF1STA" to your local server name that you can find in Microsoft sql server. Refer to to below screenshots for this step
 ![image](https://user-images.githubusercontent.com/81872507/113498327-915e3480-9529-11eb-9e20-417f528a8474.png)
 change the highlighted portion to your local server
 ![image](https://user-images.githubusercontent.com/81872507/113498351-ca96a480-9529-11eb-8afc-a34d031922dc.png)
-you can get your local server name by referring to the above scrrenshot
-Now open the Nuget pacakge manager console and run the following command
+-you can get your local server name by referring to the above scrrenshot
+-Now open the Nuget pacakge manager console and run the following command
 - Add-Migration
 - Update-Database
 - Now Build the solution
